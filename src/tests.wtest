@@ -1,6 +1,30 @@
+import example.*
 
-test "testX" {
+describe "Tests Mensajeria"{
+	const juancito = new Usuario(almacenamiento=150, nombre="juancito")
+	const roberto = new Usuario(almacenamiento=100, nombre="roberto")
+	const chatPdep = new Chat()
+	const mensaje = new Audio(duracion = 45, emisor = juancito)
+	const mensaje2 = new DeTexto(texto="parcial 3/11", emisor=roberto)
+	
+	method initialize() {
+		chatPdep.agregarParticipante(juancito)
 
-	assert.that(true)
-
+	}
+	
+	test "El peso de un Mensaje de Audio que dura 105 segundos es "{
+		assert.equals(75.2,mensaje.peso())
+	}
+	
+	test "Juancito envia un mensaje al grupo de paradigmas"{
+		chatPdep.recibir(mensaje)
+		assert.equals(1,chatPdep.cantidadDeMensajes())
+		assert.equals(74.8,juancito.espacioLibre())
+		assert.equals(1,juancito.notificaciones().size())
+	}
+	
+	test "Cuando un participante no esta en el chat, el mensaje no puede ser enviado en ese chat"{
+		assert.throwsException({ chatPdep.recibir(mensaje2) })
+	}
+	
 }
